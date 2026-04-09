@@ -12,3 +12,4 @@ C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\ob
 C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.pdb
 C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.genruntimeconfig.cache
 C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\ref\AutosCliente.dll
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.sourcelink.json

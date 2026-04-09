@@ -16,53 +16,66 @@ namespace AutosCliente.Forms
         public FormListar()
         {
             Text = "Listar Autos Eléctricos";
-            Size = new Size(860, 560);
+            Size = new Size(860, 600);
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
 
-            // Panel de filtros
             var grpFiltros = new GroupBox
             {
                 Text = "Filtros de búsqueda",
-                Left = 10, Top = 10, Width = 820, Height = 75,
+                Left = 10, Top = 10, Width = 820, Height = 135,
                 Font = new Font("Segoe UI", 9f, FontStyle.Bold)
             };
 
-            // Botón todos
+            // Fila 1 — Mostrar todos
             var btnTodos = new Button
             {
                 Text = "📋 Mostrar Todos",
-                Left = 10, Top = 28, Width = 130, Height = 30,
+                Left = 10, Top = 20, Width = 150, Height = 30,
                 BackColor = Color.FromArgb(80, 80, 80), ForeColor = Color.White, FlatStyle = FlatStyle.Flat
             };
 
-            // Filtro marca
-            grpFiltros.Controls.Add(new Label { Text = "Filtrar por Marca:", Left = 160, Top = 32, Width = 120, Font = new Font("Segoe UI", 9f) });
-            txtFiltroMarca = new TextBox { Left = 285, Top = 30, Width = 130 };
+            // Fila 2 — Filtro por marca
+            var lblMarca = new Label
+            {
+                Text = "Filtrar por Marca:",
+                Left = 10, Top = 65, Width = 130,
+                Font = new Font("Segoe UI", 9f, FontStyle.Regular)
+            };
+            txtFiltroMarca = new TextBox { Left = 145, Top = 63, Width = 200 };
             var btnFiltroMarca = new Button
             {
-                Text = "🔍 Buscar",
-                Left = 425, Top = 28, Width = 85, Height = 28,
+                Text = "🔍 Buscar por Marca",
+                Left = 355, Top = 61, Width = 160, Height = 28,
                 BackColor = Color.FromArgb(0, 120, 215), ForeColor = Color.White, FlatStyle = FlatStyle.Flat
             };
 
-            // Filtro año
-            grpFiltros.Controls.Add(new Label { Text = "Filtrar por Año:", Left = 530, Top = 32, Width = 110, Font = new Font("Segoe UI", 9f) });
-            txtFiltroAnio = new TextBox { Left = 645, Top = 30, Width = 80 };
+            // Fila 3 — Filtro por año
+            var lblAnio = new Label
+            {
+                Text = "Filtrar por Año:",
+                Left = 10, Top = 103, Width = 130,
+                Font = new Font("Segoe UI", 9f, FontStyle.Regular)
+            };
+            txtFiltroAnio = new TextBox { Left = 145, Top = 101, Width = 100 };
             var btnFiltroAnio = new Button
             {
-                Text = "🔍 Buscar",
-                Left = 735, Top = 28, Width = 75, Height = 28,
+                Text = "🔍 Buscar por Año",
+                Left = 355, Top = 99, Width = 160, Height = 28,
                 BackColor = Color.FromArgb(0, 120, 215), ForeColor = Color.White, FlatStyle = FlatStyle.Flat
             };
 
-            grpFiltros.Controls.AddRange(new Control[] { btnTodos, txtFiltroMarca, btnFiltroMarca, txtFiltroAnio, btnFiltroAnio });
+            grpFiltros.Controls.AddRange(new Control[]
+            {
+                btnTodos,
+                lblMarca, txtFiltroMarca, btnFiltroMarca,
+                lblAnio, txtFiltroAnio, btnFiltroAnio
+            });
 
-            // Grid
             grid = new DataGridView
             {
-                Left = 10, Top = 95, Width = 820, Height = 410,
+                Left = 10, Top = 155, Width = 820, Height = 395,
                 ReadOnly = true,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 AllowUserToAddRows = false,
@@ -73,13 +86,15 @@ namespace AutosCliente.Forms
             };
             grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
 
-            btnTodos.Click      += async (s, e) => CargarGrid(await _service.ListarTodos());
+            btnTodos.Click += async (s, e) => CargarGrid(await _service.ListarTodos());
+
             btnFiltroMarca.Click += async (s, e) =>
             {
                 if (string.IsNullOrWhiteSpace(txtFiltroMarca.Text))
                 { MessageBox.Show("Ingrese una marca para filtrar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                 CargarGrid(await _service.FiltrarPorMarca(txtFiltroMarca.Text.Trim()));
             };
+
             btnFiltroAnio.Click += async (s, e) =>
             {
                 if (!int.TryParse(txtFiltroAnio.Text, out int anio))
