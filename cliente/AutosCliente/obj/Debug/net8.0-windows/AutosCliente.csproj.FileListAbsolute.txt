@@ -1,0 +1,14 @@
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\bin\Debug\net8.0-windows\AutosCliente.exe
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\bin\Debug\net8.0-windows\AutosCliente.deps.json
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\bin\Debug\net8.0-windows\AutosCliente.runtimeconfig.json
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\bin\Debug\net8.0-windows\AutosCliente.dll
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\bin\Debug\net8.0-windows\AutosCliente.pdb
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.AssemblyInfoInputs.cache
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.AssemblyInfo.cs
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.csproj.CoreCompileInputs.cache
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.dll
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\refint\AutosCliente.dll
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.pdb
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\AutosCliente.genruntimeconfig.cache
+C:\Users\Yaser\Desktop\2026A\Apps empresariales\Taller 2\cliente\AutosCliente\obj\Debug\net8.0-windows\ref\AutosCliente.dll

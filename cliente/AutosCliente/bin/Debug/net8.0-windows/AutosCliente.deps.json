@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "AutosCliente/1.0.0": {
+        "runtime": {
+          "AutosCliente.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AutosCliente/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
