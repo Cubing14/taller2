@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutosCliente")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+383c2fbb2e1c51a59ad13e867854555c279c19a9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a28678835a4446d789e0a85988541577da4b7704")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutosCliente")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutosCliente")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
