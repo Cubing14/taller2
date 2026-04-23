@@ -1,4 +1,4 @@
-# Taller 2 - Gestión de Vehículos Eléctricos e Híbridos
+# Proyeceto 2 - Gestión de Vehículos Eléctricos e Híbridos
 
 Aplicación distribuida para la gestión de vehículos eléctricos e híbridos, implementando una arquitectura cliente-servidor con servicios REST. Incluye dos clientes en lenguajes distintos (C# y JavaScript) y un servidor en Java Spring Boot.
 
