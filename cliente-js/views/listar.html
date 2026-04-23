@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Listar Vehículos Eléctricos</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <h1>📋 Listar Vehículos Eléctricos</h1>
+  <div>
+    <label>Filtrar por Marca: <input type="text" id="filtroMarca"></label>
+    <label>Filtrar por Año: <input type="number" id="filtroAnio"></label>
+    <button onclick="filtrar()">Filtrar</button>
+    <button onclick="cargarTodos()">Mostrar Todos</button>
+  </div>
+  <table id="tablaAutos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Año</th>
+        <th>Autonomía</th>
+        <th>Fecha Registro</th>
+        <th>Baterías</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <a href="../index.html">Volver al Inicio</a>
+
+  <script type="module">
+    import { VehiculoController } from '../controllers/VehiculoController.js';
+    import { autoService } from '../services/AutoService.js';
+
+    const controller = new VehiculoController();
+    const tbody = document.querySelector('#tablaAutos tbody');
+
+    // Observer para actualizar automáticamente
+    class ListObserver {
+      onAutosActualizados() {
+        cargarTodos();
+      }
+    }
+    autoService.suscribir(new ListObserver());
+
+    async function cargarAutos(autos) {
+      tbody.innerHTML = '';
+      autos.forEach(auto => {
+        const row = tbody.insertRow();
+        row.insertCell().textContent = auto.id;
+        row.insertCell().textContent = auto.marca;
+        row.insertCell().textContent = auto.modelo;
+        row.insertCell().textContent = auto.anio;
+        row.insertCell().textContent = auto.autonomiaKm;
+        row.insertCell().textContent = new Date(auto.fechaRegistro).toLocaleString();
+        row.insertCell().textContent = auto.baterias.map(b => `${b.tipo} (${b.capacidadKwh}kWh)`).join(', ');
+      });
+    }
+
+    async function cargarTodos() {
+      const autos = await controller.listarElectricos();
+      if (autos) cargarAutos(autos);
+    }
+
+    async function filtrar() {
+      const marca = document.getElementById('filtroMarca').value.trim();
+      const anio = document.getElementById('filtroAnio').value;
+      let autos;
+      if (marca) {
+        autos = await controller.filtrarElectricosPorMarca(marca);
+      } else if (anio) {
+        autos = await controller.filtrarElectricosPorAnio(anio);
+      } else {
+        autos = await controller.listarElectricos();
+      }
+      if (autos) cargarAutos(autos);
+    }
+
+    window.filtrar = filtrar;
+    window.cargarTodos = cargarTodos;
+    cargarTodos(); // Cargar al inicio
+  </script>
+</body>
+</html>

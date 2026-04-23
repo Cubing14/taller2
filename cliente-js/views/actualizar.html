@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actualizar Vehículo Eléctrico</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <h1>✏️ Actualizar Vehículo Eléctrico</h1>
+  <form id="formBuscar">
+    <label>ID: <input type="number" id="idBuscar" required></label>
+    <button type="submit">Buscar</button>
+  </form>
+  <div id="formActualizar" style="display:none;">
+    <h2>Editar Vehículo</h2>
+    <form id="formEdit">
+      <input type="hidden" id="idEdit">
+      <label>Marca: <input type="text" id="marca" required></label><br>
+      <label>Modelo: <input type="text" id="modelo" required></label><br>
+      <label>Año: <input type="number" id="anio" required></label><br>
+      <label>Autonomía (km): <input type="number" step="0.1" id="autonomia" required></label><br>
+      <h3>Baterías</h3>
+      <div id="bateriasContainer"></div>
+      <button type="button" onclick="agregarBateria()">Agregar Batería</button><br><br>
+      <button type="submit">Actualizar</button>
+    </form>
+  </div>
+  <div id="mensaje"></div>
+  <a href="../index.html">Volver al Inicio</a>
+
+  <script type="module">
+    import { VehiculoController } from '../controllers/VehiculoController.js';
+
+    const controller = new VehiculoController();
+    const formBuscar = document.getElementById('formBuscar');
+    const formEdit = document.getElementById('formEdit');
+    const formActualizar = document.getElementById('formActualizar');
+    const mensaje = document.getElementById('mensaje');
+    const container = document.getElementById('bateriasContainer');
+
+    formBuscar.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const result = await controller.buscarElectrico(document.getElementById('idBuscar').value);
+      if (result.ok) {
+        const auto = result.data;
+        document.getElementById('idEdit').value = auto.id;
+        document.getElementById('marca').value = auto.marca;
+        document.getElementById('modelo').value = auto.modelo;
+        document.getElementById('anio').value = auto.anio;
+        document.getElementById('autonomia').value = auto.autonomiaKm;
+        container.innerHTML = '';
+        auto.baterias.forEach(b => agregarBateria(b));
+        formActualizar.style.display = 'block';
+      } else {
+        mensaje.textContent = result.mensaje;
+      }
+    });
+
+    formEdit.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const baterias = Array.from(document.querySelectorAll('.bateria')).map(div => ({
+        tipo: div.querySelector('[name=tipo]').value.trim(),
+        capacidadKwh: parseFloat(div.querySelector('[name=capacidad]').value),
+        ciclosVida: parseInt(div.querySelector('[name=ciclos]').value),
+        fechaInstalacion: div.querySelector('[name=fecha]').value,
+        estado: div.querySelector('[name=estado]').value.trim()
+      }));
+      const result = await controller.actualizarElectrico(
+        document.getElementById('idEdit').value,
+        document.getElementById('marca').value,
+        document.getElementById('modelo').value,
+        document.getElementById('anio').value,
+        document.getElementById('autonomia').value,
+        baterias
+      );
+      mensaje.textContent = result.mensaje;
+    });
+
+    function agregarBateria(bat = {}) {
+      const div = document.createElement('div');
+      div.className = 'bateria';
+      div.innerHTML = `
+        <label>Tipo: <input type="text" name="tipo" value="${bat.tipo || ''}" required></label>
+        <label>Capacidad (kWh): <input type="number" step="0.1" name="capacidad" value="${bat.capacidadKwh || ''}" required></label>
+        <label>Ciclos de Vida: <input type="number" name="ciclos" value="${bat.ciclosVida || ''}" required></label>
+        <label>Fecha Instalación: <input type="datetime-local" name="fecha" value="${bat.fechaInstalacion ? new Date(bat.fechaInstalacion).toISOString().slice(0,16) : ''}" required></label>
+        <label>Estado: <input type="text" name="estado" value="${bat.estado || ''}" required></label>
+        <button type="button" onclick="removerBateria(this)">Remover</button>
+      `;
+      container.appendChild(div);
+    }
+
+    window.agregarBateria = () => agregarBateria();
+    window.removerBateria = (btn) => btn.parentElement.remove();
+  </script>
+</body>
+</html>

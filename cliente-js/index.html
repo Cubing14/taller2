@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Vehículos</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<nav>
+  <span class="brand">⚡ Vehículos</span>
+
+  <div class="dropdown">
+    <button>⚡ Vehículos ▾</button>
+    <div class="dropdown-menu">
+      <a href="views/agregar.html">➕ Agregar</a>
+      <a href="views/buscar.html">🔍 Buscar</a>
+      <a href="views/actualizar.html">✏️ Actualizar</a>
+      <a href="views/eliminar.html">🗑️ Eliminar</a>
+      <a href="views/listar.html">📋 Listar</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button>🔋 Baterías ▾</button>
+    <div class="dropdown-menu">
+      <a href="views/baterias.html">⚙️ Gestionar Baterías</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button>📊 Calcular ▾</button>
+    <div class="dropdown-menu">
+      <a href="views/calcular.html">⚙️ Costo de Operación</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button>❓ Ayuda ▾</button>
+    <div class="dropdown-menu">
+      <a href="#" id="btnAcercaDe">Acerca de...</a>
+    </div>
+  </div>
+</nav>
+
+<div id="modalAcercaDe" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2>Acerca de la Aplicación</h2>
+    <p><strong>Equipo:</strong> [Nombres del equipo]</p>
+    <p><strong>Versión:</strong> 1.0</p>
+    <p><strong>Descripción:</strong> Aplicación distribuida para gestión de vehículos eléctricos y baterías.</p>
+  </div>
+</div>
+
+<div class="page">
+  <h1>⚡ Gestión de Vehículos Eléctricos e Híbridos</h1>
+
+  <div class="card">
+    <div class="card-title">Arquitectura MVC</div>
+    <table>
+      <thead><tr><th>Capa</th><th>Carpeta</th><th>Contenido</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Model</strong></td><td>models/</td><td>Vehiculo (A), AutoElectrico (B), AutoHibrido (C), Bateria (D), SistemaInfo (Singleton)</td></tr>
+        <tr><td><strong>View</strong></td><td>views/</td><td>agregar, buscar, actualizar, eliminar, listar, baterias, calcular</td></tr>
+        <tr><td><strong>Controller</strong></td><td>controllers/</td><td>VehiculoController, BateriaController</td></tr>
+        <tr><td><strong>Service</strong></td><td>services/</td><td>AutoService (HTTP + Observer)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Patrones implementados</div>
+    <table>
+      <thead><tr><th>Patrón</th><th>Dónde</th></tr></thead>
+      <tbody>
+        <tr><td>MVC</td><td>models/ · views/ · controllers/</td></tr>
+        <tr><td>Singleton</td><td>SistemaInfo.js — instancia única del sistema</td></tr>
+        <tr><td>Observer</td><td>AutoService notifica a listar.html al insertar/modificar/eliminar</td></tr>
+        <tr><td>Builder</td><td>AutoElectricoBuilder, AutoHibridoBuilder, BateriaBuilder</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Navegación</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="views/agregar.html"    class="btn btn-primary">➕ Agregar</a>
+      <a href="views/buscar.html"     class="btn btn-secondary">🔍 Buscar</a>
+      <a href="views/actualizar.html" class="btn btn-warning">✏️ Actualizar</a>
+      <a href="views/eliminar.html"   class="btn btn-danger">🗑️ Eliminar</a>
+      <a href="views/listar.html"     class="btn btn-secondary">📋 Listar</a>
+      <a href="views/baterias.html"   class="btn btn-success">🔋 Baterías</a>
+      <a href="views/calcular.html"   class="btn btn-purple">📊 Calcular</a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { SistemaInfo } from './models/SistemaInfo.js';
+  // Modal Acerca de
+  const modal = document.getElementById('modalAcercaDe');
+  const btn = document.getElementById('btnAcercaDe');
+  const close = document.getElementById('closeModal');
+
+  btn.onclick = (e) => {
+    e.preventDefault();
+    modal.style.display = 'block';
+  };
+  close.onclick = () => modal.style.display = 'none';
+  window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+</script>
+
+</body>
+</html>

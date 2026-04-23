@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Eliminar Vehículo Eléctrico</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <h1>🗑️ Eliminar Vehículo Eléctrico</h1>
+  <form id="formBuscar">
+    <label>ID: <input type="number" id="idBuscar" required></label>
+    <button type="submit">Buscar</button>
+  </form>
+  <div id="infoEliminar" style="display:none;">
+    <h2>¿Eliminar este vehículo?</h2>
+    <div id="info"></div>
+    <button id="btnEliminar">Sí, Eliminar</button>
+    <button onclick="document.getElementById('infoEliminar').style.display='none'">Cancelar</button>
+  </div>
+  <div id="mensaje"></div>
+  <a href="../index.html">Volver al Inicio</a>
+
+  <script type="module">
+    import { VehiculoController } from '../controllers/VehiculoController.js';
+
+    const controller = new VehiculoController();
+    const formBuscar = document.getElementById('formBuscar');
+    const infoEliminar = document.getElementById('infoEliminar');
+    const info = document.getElementById('info');
+    const mensaje = document.getElementById('mensaje');
+    let currentId = null;
+
+    formBuscar.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const result = await controller.buscarElectrico(document.getElementById('idBuscar').value);
+      if (result.ok) {
+        const auto = result.data;
+        currentId = auto.id;
+        info.innerHTML = `
+          <p>ID: ${auto.id}</p>
+          <p>Marca: ${auto.marca}</p>
+          <p>Modelo: ${auto.modelo}</p>
+          <p>Año: ${auto.anio}</p>
+          <p>Autonomía: ${auto.autonomiaKm} km</p>
+          <p>Fecha Registro: ${new Date(auto.fechaRegistro).toLocaleString()}</p>
+          <h3>Baterías:</h3>
+          <ul>
+            ${auto.baterias.map(b => `
+              <li>Tipo: ${b.tipo}, Capacidad: ${b.capacidadKwh} kWh, Ciclos: ${b.ciclosVida}, Fecha: ${new Date(b.fechaInstalacion).toLocaleString()}, Estado: ${b.estado}</li>
+            `).join('')}
+          </ul>
+        `;
+        infoEliminar.style.display = 'block';
+      } else {
+        mensaje.textContent = result.mensaje;
+      }
+    });
+
+    document.getElementById('btnEliminar').addEventListener('click', async () => {
+      const result = await controller.eliminarElectrico(currentId);
+      mensaje.textContent = result.mensaje;
+      infoEliminar.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

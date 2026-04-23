@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestionar Baterías</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <h1>⚙️ Gestionar Baterías</h1>
+  <div>
+    <h2>Agregar Batería</h2>
+    <form id="formAgregarBat">
+      <label>Tipo: <input type="text" id="tipo" required></label>
+      <label>Capacidad (kWh): <input type="number" step="0.1" id="capacidad" required></label>
+      <label>Ciclos de Vida: <input type="number" id="ciclos" required></label>
+      <label>Fecha Instalación: <input type="datetime-local" id="fecha" required></label>
+      <label>Estado: <input type="text" id="estado" required></label>
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+  <div>
+    <h2>Buscar Batería</h2>
+    <form id="formBuscarBat">
+      <label>ID: <input type="number" id="idBuscar" required></label>
+      <button type="submit">Buscar</button>
+    </form>
+    <div id="resultadoBuscar"></div>
+  </div>
+  <div id="mensaje"></div>
+  <a href="../index.html">Volver al Inicio</a>
+
+  <script type="module">
+    import { BateriaController } from '../controllers/BateriaController.js';
+
+    const controller = new BateriaController();
+    const formAgregar = document.getElementById('formAgregarBat');
+    const formBuscar = document.getElementById('formBuscarBat');
+    const resultado = document.getElementById('resultadoBuscar');
+    const mensaje = document.getElementById('mensaje');
+
+    formAgregar.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const result = await controller.agregarBateria(
+        document.getElementById('tipo').value,
+        document.getElementById('capacidad').value,
+        document.getElementById('ciclos').value,
+        document.getElementById('fecha').value,
+        document.getElementById('estado').value
+      );
+      mensaje.textContent = result.mensaje;
+      if (result.ok) formAgregar.reset();
+    });
+
+    formBuscar.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const result = await controller.buscarBateria(document.getElementById('idBuscar').value);
+      if (result.ok) {
+        const bat = result.data;
+        resultado.innerHTML = `
+          <p>ID: ${bat.id}</p>
+          <p>Tipo: ${bat.tipo}</p>
+          <p>Capacidad: ${bat.capacidadKwh} kWh</p>
+          <p>Ciclos: ${bat.ciclosVida}</p>
+          <p>Fecha: ${new Date(bat.fechaInstalacion).toLocaleString()}</p>
+          <p>Estado: ${bat.estado}</p>
+          <button onclick="editarBateria(${bat.id})">Editar</button>
+          <button onclick="eliminarBateria(${bat.id})">Eliminar</button>
+        `;
+      } else {
+        resultado.textContent = result.mensaje;
+      }
+    });
+
+    window.editarBateria = async (id) => {
+      // Simple edit: prompt for new values
+      const tipo = prompt('Nuevo Tipo:');
+      if (tipo) {
+        const result = await controller.actualizarBateria(id, tipo, null, null, null, null); // Only update tipo for simplicity
+        mensaje.textContent = result.mensaje;
+      }
+    };
+
+    window.eliminarBateria = async (id) => {
+      if (confirm('¿Eliminar batería?')) {
+        const result = await controller.eliminarBateria(id);
+        mensaje.textContent = result.mensaje;
+      }
+    };
+  </script>
+</body>
+</html>

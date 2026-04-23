@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcular Costo de Operación</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <h1>⚙️ Calcular Costo de Operación</h1>
+  <form id="formCalcular">
+    <label>ID del Vehículo: <input type="number" id="id" required></label>
+    <button type="submit">Calcular</button>
+  </form>
+  <div id="resultado"></div>
+  <a href="../index.html">Volver al Inicio</a>
+
+  <script type="module">
+    import { VehiculoController } from '../controllers/VehiculoController.js';
+
+    const controller = new VehiculoController();
+    const form = document.getElementById('formCalcular');
+    const resultado = document.getElementById('resultado');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const costo = await controller.calcularCostoElectrico(document.getElementById('id').value);
+      if (costo !== null) {
+        resultado.textContent = `Costo de operación: $${costo.toFixed(2)} USD`;
+      } else {
+        resultado.textContent = 'Error al calcular o vehículo no encontrado.';
+      }
+    });
+  </script>
+</body>
+</html>
